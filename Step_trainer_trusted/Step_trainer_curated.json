@@ -1,0 +1,39 @@
+{
+  "name" : "Step_trainer_curated",
+  "description" : "",
+  "role" : "arn:aws:iam::369216724147:role/my-glue-service-role",
+  "executionProperty" : {
+    "maxConcurrentRuns" : 1
+  },
+  "command" : {
+    "name" : "glueetl",
+    "scriptLocation" : "s3://aws-glue-assets-369216724147-us-east-1/scripts/Step_trainer_curated.py",
+    "pythonVersion" : "3"
+  },
+  "defaultArguments" : {
+    "--enable-metrics" : "true",
+    "--enable-spark-ui" : "true",
+    "--spark-event-logs-path" : "s3://aws-glue-assets-369216724147-us-east-1/sparkHistoryLogs/",
+    "--enable-job-insights" : "false",
+    "--enable-glue-datacatalog" : "true",
+    "--enable-continuous-cloudwatch-log" : "true",
+    "--job-bookmark-option" : "job-bookmark-disable",
+    "--job-language" : "python",
+    "--TempDir" : "s3://aws-glue-assets-369216724147-us-east-1/temporary/"
+  },
+  "maxRetries" : 0,
+  "allocatedCapacity" : 10,
+  "timeout" : 2880,
+  "maxCapacity" : 10.0,
+  "glueVersion" : "4.0",
+  "numberOfWorkers" : 10,
+  "workerType" : "G.1X",
+  "executionClass" : "STANDARD",
+  "codeGenConfigurationNodes" : "{\"node-1688594858091\":{\"S3JsonSource\":{\"AdditionalOptions\":{\"EnableSamplePath\":false,\"SamplePath\":\"s3://stedi-dawood/accelerometer_trsuted2/run-1688594716289-part-r-00000\"},\"Exclusions\":[],\"JsonPath\":\"\",\"Multiline\":false,\"Name\":\"Accelerometer trusted\",\"OutputSchemas\":[{\"Columns\":[{\"Name\":\"serialNumber\",\"Type\":\"string\"},{\"Name\":\"z\",\"Type\":\"double\"},{\"Name\":\"birthDay\",\"Type\":\"string\"},{\"Name\":\"timeStamp\",\"Type\":\"bigint\"},{\"Name\":\"shareWithPublicAsOfDate\",\"Type\":\"bigint\"},{\"Name\":\"shareWithResearchAsOfDate\",\"Type\":\"bigint\"},{\"Name\":\"registrationDate\",\"Type\":\"bigint\"},{\"Name\":\"customerName\",\"Type\":\"string\"},{\"Name\":\"user\",\"Type\":\"string\"},{\"Name\":\"y\",\"Type\":\"double\"},{\"Name\":\"x\",\"Type\":\"double\"},{\"Name\":\"email\",\"Type\":\"string\"},{\"Name\":\"lastUpdateDate\",\"Type\":\"bigint\"},{\"Name\":\"phone\",\"Type\":\"string\"}]}],\"Paths\":[\"s3://stedi-dawood/accelerometer_trsuted2/\"],\"Recurse\":true}},\"node-1\":{\"S3JsonSource\":{\"AdditionalOptions\":{\"EnableSamplePath\":false,\"SamplePath\":\"s3://stedi-dawood/Step_trainer/step_trainer-1655296678763.json\"},\"Exclusions\":[],\"JsonPath\":\"\",\"Multiline\":false,\"Name\":\"step_trainer\",\"OutputSchemas\":[{\"Columns\":[{\"Name\":\"sensorReadingTime\",\"Type\":\"bigint\"},{\"Name\":\"serialNumber\",\"Type\":\"string\"},{\"Name\":\"distanceFromObject\",\"Type\":\"int\"}]}],\"Paths\":[\"s3://stedi-dawood/Step_trainer/\"],\"Recurse\":true}},\"node-1688595375946\":{\"ApplyMapping\":{\"Inputs\":[\"node-1688594858091\"],\"Mapping\":[{\"Dropped\":false,\"FromPath\":[\"serialNumber\"],\"FromType\":\"string\",\"ToKey\":\"right_serialNumber\",\"ToType\":\"string\"},{\"Dropped\":false,\"FromPath\":[\"z\"],\"FromType\":\"double\",\"ToKey\":\"right_z\",\"ToType\":\"double\"},{\"Dropped\":false,\"FromPath\":[\"birthDay\"],\"FromType\":\"string\",\"ToKey\":\"right_birthDay\",\"ToType\":\"string\"},{\"Dropped\":false,\"FromPath\":[\"timeStamp\"],\"FromType\":\"bigint\",\"ToKey\":\"right_timeStamp\",\"ToType\":\"bigint\"},{\"Dropped\":false,\"FromPath\":[\"shareWithPublicAsOfDate\"],\"FromType\":\"bigint\",\"ToKey\":\"right_shareWithPublicAsOfDate\",\"ToType\":\"bigint\"},{\"Dropped\":false,\"FromPath\":[\"shareWithResearchAsOfDate\"],\"FromType\":\"bigint\",\"ToKey\":\"right_shareWithResearchAsOfDate\",\"ToType\":\"bigint\"},{\"Dropped\":false,\"FromPath\":[\"registrationDate\"],\"FromType\":\"bigint\",\"ToKey\":\"right_registrationDate\",\"ToType\":\"bigint\"},{\"Dropped\":false,\"FromPath\":[\"customerName\"],\"FromType\":\"string\",\"ToKey\":\"right_customerName\",\"ToType\":\"string\"},{\"Dropped\":false,\"FromPath\":[\"user\"],\"FromType\":\"string\",\"ToKey\":\"right_user\",\"ToType\":\"string\"},{\"Dropped\":false,\"FromPath\":[\"y\"],\"FromType\":\"double\",\"ToKey\":\"right_y\",\"ToType\":\"double\"},{\"Dropped\":false,\"FromPath\":[\"x\"],\"FromType\":\"double\",\"ToKey\":\"right_x\",\"ToType\":\"double\"},{\"Dropped\":false,\"FromPath\":[\"email\"],\"FromType\":\"string\",\"ToKey\":\"right_email\",\"ToType\":\"string\"},{\"Dropped\":false,\"FromPath\":[\"lastUpdateDate\"],\"FromType\":\"bigint\",\"ToKey\":\"right_lastUpdateDate\",\"ToType\":\"bigint\"},{\"Dropped\":false,\"FromPath\":[\"phone\"],\"FromType\":\"string\",\"ToKey\":\"right_phone\",\"ToType\":\"string\"}],\"Name\":\"Renamed keys for Join\"}},\"node-1688594348027\":{\"Join\":{\"Columns\":[{\"From\":\"node-1\",\"Keys\":[[\"serialNumber\"]]},{\"From\":\"node-1688595375946\",\"Keys\":[[\"right_serialNumber\"]]}],\"Inputs\":[\"node-1\",\"node-1688595375946\"],\"JoinType\":\"equijoin\",\"Name\":\"Join\"}},\"node-1688595382392\":{\"S3DirectTarget\":{\"Compression\":\"none\",\"Format\":\"json\",\"Inputs\":[\"node-1688594348027\"],\"Name\":\"Step Trainer Trusted\",\"PartitionKeys\":[],\"Path\":\"s3://stedi-dawood/Step_trainer_trusted/\",\"SchemaChangePolicy\":{\"EnableUpdateCatalog\":false}}}}",
+  "sourceControlDetails" : {
+    "provider" : "GITHUB",
+    "repository" : "aws-data-engineering",
+    "branch" : "main",
+    "folder" : "Step_trainer_trusted"
+  }
+}
