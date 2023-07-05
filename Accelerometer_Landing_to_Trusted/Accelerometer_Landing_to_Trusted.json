@@ -1,0 +1,39 @@
+{
+  "name" : "Accelerometer_Landing_to_Trusted",
+  "description" : "",
+  "role" : "arn:aws:iam::369216724147:role/my-glue-service-role",
+  "executionProperty" : {
+    "maxConcurrentRuns" : 1
+  },
+  "command" : {
+    "name" : "glueetl",
+    "scriptLocation" : "s3://aws-glue-assets-369216724147-us-east-1/scripts/Accelerometer_Landing_to_Trusted.py",
+    "pythonVersion" : "3"
+  },
+  "defaultArguments" : {
+    "--enable-metrics" : "true",
+    "--enable-spark-ui" : "true",
+    "--spark-event-logs-path" : "s3://aws-glue-assets-369216724147-us-east-1/sparkHistoryLogs/",
+    "--enable-job-insights" : "false",
+    "--enable-glue-datacatalog" : "true",
+    "--enable-continuous-cloudwatch-log" : "true",
+    "--job-bookmark-option" : "job-bookmark-disable",
+    "--job-language" : "python",
+    "--TempDir" : "s3://aws-glue-assets-369216724147-us-east-1/temporary/"
+  },
+  "maxRetries" : 0,
+  "allocatedCapacity" : 10,
+  "timeout" : 2880,
+  "maxCapacity" : 10.0,
+  "glueVersion" : "4.0",
+  "numberOfWorkers" : 10,
+  "workerType" : "G.1X",
+  "executionClass" : "STANDARD",
+  "codeGenConfigurationNodes" : "{\"node-1\":{\"S3JsonSource\":{\"AdditionalOptions\":{\"EnableSamplePath\":false,\"SamplePath\":\"s3://stedi-dawood/customer-trusted/run-1688512187942-part-r-00000\"},\"Exclusions\":[],\"JsonPath\":\"\",\"Multiline\":false,\"Name\":\"Customer Trusted\",\"OutputSchemas\":[{\"Columns\":[{\"Name\":\"serialNumber\",\"Type\":\"string\"},{\"Name\":\"shareWithPublicAsOfDate\",\"Type\":\"bigint\"},{\"Name\":\"birthDay\",\"Type\":\"string\"},{\"Name\":\"registrationDate\",\"Type\":\"bigint\"},{\"Name\":\"shareWithResearchAsOfDate\",\"Type\":\"bigint\"},{\"Name\":\"customerName\",\"Type\":\"string\"},{\"Name\":\"email\",\"Type\":\"string\"},{\"Name\":\"lastUpdateDate\",\"Type\":\"bigint\"},{\"Name\":\"phone\",\"Type\":\"string\"},{\"Name\":\"shareWithFriendsAsOfDate\",\"Type\":\"bigint\"}]}],\"Paths\":[\"s3://stedi-dawood/customer-trusted/\"],\"Recurse\":true}},\"node-3\":{\"S3DirectTarget\":{\"Compression\":\"none\",\"Format\":\"json\",\"Inputs\":[\"node-1688586589167\"],\"Name\":\"Accelerometer Trusted\",\"PartitionKeys\":[],\"Path\":\"s3://stedi-dawood/\",\"SchemaChangePolicy\":{\"EnableUpdateCatalog\":false}}},\"node-1688586206033\":{\"S3JsonSource\":{\"AdditionalOptions\":{\"EnableSamplePath\":false,\"SamplePath\":\"s3://stedi-dawood/accelerometer_landing/accelerometer-1655296678763.json\"},\"Exclusions\":[],\"JsonPath\":\"\",\"Multiline\":false,\"Name\":\"Accelerometer Landing\",\"OutputSchemas\":[{\"Columns\":[{\"Name\":\"user\",\"Type\":\"string\"},{\"Name\":\"timeStamp\",\"Type\":\"bigint\"},{\"Name\":\"x\",\"Type\":\"double\"},{\"Name\":\"y\",\"Type\":\"double\"},{\"Name\":\"z\",\"Type\":\"double\"}]}],\"Paths\":[\"s3://stedi-dawood/accelerometer_landing/\"],\"Recurse\":true}},\"node-1688586589167\":{\"DropFields\":{\"Inputs\":[\"node-1688586319135\"],\"Name\":\"Drop Fields\",\"Paths\":[[\"serialNumber\"],[\"shareWithPublicAsOfDate\"],[\"birthDay\"],[\"registrationDate\"],[\"shareWithResearchAsOfDate\"],[\"customerName\"],[\"email\"],[\"lastUpdateDate\"],[\"phone\"],[\"shareWithFriendsAsOfDate\"],[\"timeStamp\"]]}},\"node-1688586319135\":{\"Join\":{\"Columns\":[{\"From\":\"node-1\",\"Keys\":[[\"email\"]]},{\"From\":\"node-1688586206033\",\"Keys\":[[\"user\"]]}],\"Inputs\":[\"node-1\",\"node-1688586206033\"],\"JoinType\":\"equijoin\",\"Name\":\"Privacy Join\"}}}",
+  "sourceControlDetails" : {
+    "provider" : "GITHUB",
+    "repository" : "aws-data-engineering",
+    "branch" : "main",
+    "folder" : "Accelerometer_Landing_to_Trusted"
+  }
+}
